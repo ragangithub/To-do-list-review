@@ -1,8 +1,12 @@
-import Task from './task.js';
+function Task(description, completed = false, index) {
+  this.description = description;
+  this.completed = completed;
+  this.index = index;
+}
 
 export default class TaskCollection {
   constructor() {
-    this.tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    this.tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
     if (this.tasks.length === 0) {
       this.count = 1;
@@ -15,7 +19,7 @@ export default class TaskCollection {
     const newTask = new Task(description, completed, index);
 
     this.tasks.push(newTask);
-    localStorage.setItem('tasks', JSON.stringify(this.tasks)); // save updated collection to localStorage
+    localStorage.setItem("tasks", JSON.stringify(this.tasks)); // save updated collection to localStorage
     this.displayTasks();
 
     this.count += 1;
@@ -23,13 +27,13 @@ export default class TaskCollection {
 
   removeTask(index) {
     this.tasks = this.tasks.filter(
-      (task) => task.index !== parseInt(index, 10),
+      (task) => task.index !== parseInt(index, 10)
     );
 
     this.tasks = this.tasks.map((task, i) => ({ ...task, index: i + 1 }));
     this.count -= 1;
 
-    localStorage.setItem('tasks', JSON.stringify(this.tasks)); // save updated collection to localStorage
+    localStorage.setItem("tasks", JSON.stringify(this.tasks)); // save updated collection to localStorage
     this.displayTasks();
   }
 
@@ -46,6 +50,6 @@ export default class TaskCollection {
       }
       return task;
     });
-    localStorage.setItem('tasks', JSON.stringify(this.tasks)); // save updated collection to localStorage
+    localStorage.setItem("tasks", JSON.stringify(this.tasks)); // save updated collection to localStorage
   }
 }
